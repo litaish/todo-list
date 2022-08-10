@@ -1,0 +1,321 @@
+/* contains everything reusable - buttons, navbars, cards, etc. */
+
+@use "base";
+@use "mixins";
+
+/* Nav */
+nav {
+    background-color: base.$nav-bg-color;
+    border-right: base.$section-border;
+    font-family: 'Alata', sans-serif;
+    padding: 4rem 2.5rem;
+}
+.nav-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    > h5, hr {
+        margin: 0;
+    }
+
+    > hr {
+        border: 1px solid base.$nav-text-color;
+    }
+
+    h5 {
+        color: base.$nav-text-color;
+        font-size: 2rem;
+        font-weight: map-get($map: base.$font-weights, $key: "Regular");
+    }
+}
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem .5rem;
+
+    > li {
+        transition: .4s;
+        border-radius: base.$border-radius;
+        margin-top: 1rem;
+        padding: .3rem .5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: .9rem;
+
+        &:hover {
+            background-color: base.$nav-text-hover-color;
+        }
+
+        > p {
+            margin: 0;
+            color: base.$nav-text-color;
+            font-size: 1.25rem;
+            font-weight: map-get($map: base.$font-weights, $key: "Regular");
+            cursor: pointer;
+        }
+    } 
+}
+/* Use a library for svg elipses */
+#priority_low_circle {
+    @include mixins.nav-icons($color: base.$priority-low-color, 
+                                $is-circle: true);
+}
+#priority_medium_circle {
+    @include mixins.nav-icons($color: base.$priority-med-color, 
+                                $is-circle: true);
+}
+#priority_high_circle {
+    @include mixins.nav-icons($color: base.$priority-high-color, 
+                                $is-circle: true);
+}
+/* Include this class for every nav icon (except priority) */
+.nav-icon {
+    @include mixins.nav-icons($color: blue, 
+    $is-circle: false);
+}
+.nav-icon-action {
+    margin-left: auto;
+}
+
+
+/* Footer */
+footer {
+    background-color: base.$footer-bg-color;
+    border-top: base.$section-border;
+    font-family: 'Alata', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.created-by-container {
+    border: 2px dashed base.$footer-text-color;
+    border-radius: base.$border-radius;
+    padding: .5rem 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+
+    > p, a {
+        color: base.$footer-text-color;
+        margin: 0;
+    }
+
+    > a {
+        text-decoration: none;
+    }
+
+    > svg {
+        color: base.$footer-icon-color;
+    }
+}
+
+/* Main */
+main {
+    background-color: base.$main-bg-color;
+    font-family: 'Alata', sans-serif;
+    padding: 3.125rem 4.3rem;
+}
+.main-content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.main-title {
+    margin: 0;
+    color: base.$main-title-color;
+    font-size: 2rem;
+    font-weight: map-get($map: base.$font-weights, $key: "Regular");
+}
+.add-new-task-container {
+    display: flex;
+    align-items: center;
+    gap: 1.625rem;
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+    margin-left: 1.4rem;
+
+    > span {
+        @include mixins.checkbox;
+
+        border-radius: base.$border-radius;
+        border: base.$checkbox-border;
+        background-color: base.$task-bg-color;
+        cursor: pointer;
+    }
+
+    > p {
+        color: base.$add-new-task-color;
+        font-size: 1.125rem;
+        margin: 0;
+    }
+}
+.task-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1.375rem;
+}
+.task {
+    background-color: base.$task-bg-color;
+    width: 75%;
+    border-radius: base.$border-radius;
+    display: flex;
+    padding: 1.4rem 1.4rem;
+    gap: 1rem;
+    
+    @include mixins.task-drop-shadow();
+}
+.task-complete-container {
+    flex-basis: 5%;
+
+    > input[type="checkbox"] {
+        @include mixins.checkbox;
+
+        accent-color: base.$checkbox-checked-color;
+    }
+}
+.task-content-container {
+    flex-basis: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    p {
+        margin: 0;
+    }
+
+    p, div {
+        font-size: 1.125rem;
+        font-weight: map-get($map: base.$font-weights, $key: "Regular");
+    }
+}
+.task-title {
+    color: base.$task-title-color;
+}
+.task-desc {
+    color: base.$task-desc-color;
+}
+.task-details {
+    display: flex;
+    gap: 3.125rem;
+}
+.task-priority-tag {
+    color: base.$task-priority-color;
+    padding: .2rem .5rem;
+    border-radius: base.$border-radius;
+    background-color: base.$priority-low-tag-color;
+}
+.task-tag {
+    color: base.$task-date-color;
+    padding: .2rem .5rem;
+    border: base.$task-tag-border;
+    border-radius: base.$border-radius;
+}
+.task-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Task edit, add overlay */
+#overlay {
+position: fixed;
+display: flex;
+justify-content: center;
+align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: base.$overlay-bg-color;
+  z-index: 2;
+  cursor: pointer;
+
+  // Overlay container
+  > div {
+    font-family: 'Alata', sans-serif;
+    // Calculate form width
+    width: 50%;
+    background-color: base.$overlay-edit-container-color;
+    border-radius: base.$border-radius;
+
+    > header {
+        height: 5rem;
+        text-align: center;
+        line-height: 5rem;
+        background-color: base.$overlay-title-color;
+        color: base.$overlay-title-text-color;
+        font-size: 3rem;
+    }
+
+    > form {
+        margin: 3% 7%;
+
+        .form-field {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 1.125rem;
+
+            > label {
+                color: base.$form-label-color;
+            }
+
+            > input, textarea {
+                padding: .4rem 1rem;
+                border: base.$form-input-border;
+                border-radius: base.$border-radius;
+                color: base.$form-input-color;
+
+                &:focus {
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: base.$form-placeholder-color;
+                }
+            }
+
+            > textarea {
+                resize: none;
+                height: 125px;
+            }
+        }
+        .field-long {
+            width: 85%;
+        }
+        .field-short {
+            width: 50%;
+        }
+    }
+  }
+}
+.overlay-buttons {
+    border-top: base.$form-buttons-border;
+    height: 5rem;
+    padding-right: 8%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3%;
+
+    > button {
+        cursor: pointer;
+        transition: .3s;
+        padding: .5rem 2rem;
+        background-color: base.$form-btn-bg-color;
+        border: none;
+        border-radius: base.$border-radius;
+        color: base.$form-btn-text-color;
+
+        &:hover {
+            background-color: base.$form-btn-hover-color;
+        }
+    }
+}

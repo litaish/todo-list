@@ -1,0 +1,35 @@
+/* contains all layout (grid systems, etc.) */
+
+@use "base";
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: base.$base-font-size;
+  }
+*, *:before, *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: base.$system-font-stack;
+    display: grid;
+    grid-template: 4fr 0.4fr / 1fr 4fr;
+    grid-template-areas: 
+    "nav main"
+    "nav footer";
+    height: 100vh;
+}
+nav {
+    grid-area: nav;
+}
+main {
+    grid-area: main;
+}
+footer {
+    grid-area: footer;
+}

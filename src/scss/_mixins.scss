@@ -1,0 +1,27 @@
+/* contains templates that can be reused to create elements */
+@use "base";
+
+// For creating nav icons
+@mixin nav-icons($color, $is-circle) {
+    width: 25px;
+    height: 25px;
+    color: $color;
+
+    @if $is-circle {
+        border-radius: 25px;
+        background-color: $color;
+    }
+}
+
+// For checkboxes
+@mixin checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+// Drop shadow for task
+@mixin task-drop-shadow {
+    box-shadow: 1px 4px 11px 1px rgba(201,201,201,0.75);
+    -webkit-box-shadow: 1px 4px 11px 1px rgba(201,201,201,0.75);
+    -moz-box-shadow: 1px 4px 11px 1px rgba(201,201,201,0.75);
+}

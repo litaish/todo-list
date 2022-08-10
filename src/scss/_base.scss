@@ -1,0 +1,65 @@
+/* contains all the resets, variables, mixins, and utility classes */
+
+// Font related
+$base-font-size: 16px;
+$system-font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$font-weights: (
+    "Regular": 400,
+    "Medium":  500,
+    "Bold":    700
+);
+
+// Colors
+$nav-bg-color: #4C956C;
+$nav-text-color: #FFFFFF;
+$nav-text-hover-color: #2C6E49;
+
+$main-bg-color: #E7E7E7;
+$main-title-color: #3F3F46;
+
+$footer-bg-color: #2C6E49;
+$footer-text-color: #FFFFFF;
+$footer-icon-color: #0F172A;
+
+$section-border-color: #DADADA;
+
+$priority-low-color: #22C55E;
+$priority-med-color: #FCD34D;
+$priority-high-color: #EF4444;
+
+$priority-low-tag-color: rgba(34, 197, 94, 0.4);
+$priority-low-med-color: rgba(252, 211, 77, 0.4);
+$priority-low-high-color: rgba(239, 68, 68, 0.4);
+
+$add-new-task-color: #A5A5A5;
+
+$checkbox-border-color: #DDDDDD;
+$checkbox-checked-color: #65A30D;
+
+$task-bg-color: #F6F6F6;
+$task-title-color: #3F3F46;
+$task-desc-color: #706F6F;
+$task-priority-color: #3F3F46;
+$task-date-color: #706F6F;
+
+$overlay-bg-color: rgba(38, 38, 38, 0.7);
+$overlay-edit-container-color: #F6F6F6;
+$overlay-title-color: #2C6E49;
+$overlay-title-text-color: #FFFFFF;
+
+$form-label-color: #3F3F46;
+$form-input-color: #3F3F46;
+$form-placeholder-color: #A4A4A4;
+$form-btn-bg-color: #2C6E49;
+$form-btn-hover-color: #184B2F;
+$form-btn-text-color: #FFFFFF;
+
+// Radius
+$border-radius: 5px;
+
+// Borders
+$form-buttons-border: 4px solid #DDDDDD;
+$form-input-border: 2px solid #DDDDDD;
+$task-tag-border: 2px solid #DDDDDD;
+$section-border: 7px solid $section-border-color;
+$checkbox-border: 2px solid $checkbox-border-color;
