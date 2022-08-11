@@ -1,22 +1,14 @@
 import "./scss/main.scss";
-import printMe from './modules/nav.js';
+import { footer } from "./modules/footer";
+import { nav } from "./modules/nav"; 
 
- function component() {
-   const element = document.createElement('div');
+const initialPageLoad = () => {
+  // Main elements - nav, main, footer
+  const body = document.getElementsByTagName("body")[0];
 
-  const btn = document.createElement('button');
-
-   element.innerText = "Hi";
-
-  btn.innerHTML = 'Click me and check the console!';
-
-  btn.onclick = printMe;
+  nav.render(body);
+  footer.render(body);
 
 
-  element.appendChild(btn);
-
-
-   return element;
- }
-
- document.body.appendChild(component());
+}
+initialPageLoad();

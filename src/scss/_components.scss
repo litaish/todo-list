@@ -57,28 +57,13 @@ nav {
         }
     } 
 }
-/* Use a library for svg elipses */
-#priority_low_circle {
-    @include mixins.nav-icons($color: base.$priority-low-color, 
-                                $is-circle: true);
-}
-#priority_medium_circle {
-    @include mixins.nav-icons($color: base.$priority-med-color, 
-                                $is-circle: true);
-}
-#priority_high_circle {
-    @include mixins.nav-icons($color: base.$priority-high-color, 
-                                $is-circle: true);
-}
-/* Include this class for every nav icon (except priority) */
 .nav-icon {
-    @include mixins.nav-icons($color: blue, 
-    $is-circle: false);
+    width: 24px;
+    height: 24px;
 }
 .nav-icon-action {
     margin-left: auto;
 }
-
 
 /* Footer */
 footer {

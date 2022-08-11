@@ -1,11 +1,6 @@
-// @import "normalize";
-// @import "~bootstrap";
-
 @use "_components.scss";
 @use "_layout.scss";
 
+@import "normalize.css";
 @import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
-
-body {
-  color: blue;
-}
+// @import "~bootstrap";
