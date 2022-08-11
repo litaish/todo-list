@@ -1,6 +1,7 @@
 import { TaskGroup } from "./group";
 
 import { categories } from "./categories";
+import { projects } from "./projects";
 
 export const nav = {
   render: (container) => {
@@ -11,6 +12,7 @@ export const nav = {
 
     // Render seperate components
     categories.render(contentContainer);
+    projects.render(contentContainer);
     
   },
 };
