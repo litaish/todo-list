@@ -7,7 +7,7 @@ import Pencil from '../images/icons-colored/pencil.svg';
 
 export const projects = {
     groups: [
-        new TaskGroup("User Tasks"),
+        new TaskGroup("User Tasks", false),
     ],
     render: container => {
         const titleContainer = document.createElement("div");
@@ -26,14 +26,26 @@ export const projects = {
     },
     renderGroups: container => {
         projects.groups.forEach(group => {
+                // Collection of elements that will be appended to list item
+                let collection = [];
+
                 const li = document.createElement("li");
                 const svgLeft = createSvgElement(Folder, ["nav-icon"]);
                 const titleEl = document.createElement("p");
                 const title = document.createTextNode(group.title);
                 titleEl.appendChild(title);
-                const svgRight = createSvgElement(Pencil, ["nav-icon", "nav-icon-action"]);
+                collection.push(svgLeft, titleEl);
+                
+                // If group is ment to be edited, create the icon and add it to the appendable collection
+                if (group.isEditable !== false) {
+                    const svgRight = createSvgElement(Pencil, ["nav-icon", "nav-icon-action"]);
+                    collection.push(svgRight);
+                }
 
-                li.append(svgLeft, titleEl, svgRight);
+                // Append collection of children to li element
+                collection.forEach(element => {
+                    li.appendChild(element);
+                })
                 container.appendChild(li);
         });
     },
