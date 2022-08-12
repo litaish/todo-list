@@ -14,6 +14,13 @@ const createSvgIcon = (path, classes) => {
     }
 }
 
+const setAttributes = (el, attrs) => {
+    for (let key in attrs) {
+        el.setAttribute(key, attrs[key]);
+    }
+}
+
 export {
     createSvgIcon,
+    setAttributes,
 }
