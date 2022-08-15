@@ -9,5 +9,6 @@ const initialPageLoad = (() => {
 
   nav.render(body);
   footer.render(body);
+  overlay.renderBase();
 })(); // Self init
 

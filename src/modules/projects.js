@@ -1,6 +1,6 @@
 import { TaskGroup } from "./group";
 import { createSvgIcon } from "./utility";
-import { overlay } from "./overlay";
+import { addGroupForm } from "./addGroupForm";
 import Folder from "../images/icons-colored/folder.svg";
 import Pencil from "../images/icons-colored/pencil.svg";
 import Plus from "../images/icons-colored/plus.svg";
@@ -41,7 +41,7 @@ export const projects = {
     const anIcon = createSvgIcon(Plus, ["nav-icon", "nav-icon-action"]);
     // Add event listener for Add New Group button
     anIcon.addEventListener("click", () => {
-        overlay.renderGroupForm("Add A New Group");
+        addGroupForm.render("Add A New Group");
     })
 
     anLi.append(anPadding, anTitle, anIcon);
