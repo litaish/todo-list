@@ -2,7 +2,7 @@ import { TaskGroup } from "./group";
 
 import { categories } from "./categories";
 import { projects } from "./projects";
-import { overlay } from "./overlay";
+import { pubsub } from './pubsub';
 
 export const nav = {
   render: (container) => {

@@ -1,6 +1,7 @@
 /* Handles categories section in navbar */
 import Scroll from '../images/icons-colored/scroll.svg';
 import Clock from '../images/icons-colored/clock.svg';
+import { pubsub } from './pubsub';
 
 export const categories = {
   list: [
