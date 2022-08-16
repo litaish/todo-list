@@ -49,8 +49,6 @@ export const categories = {
       ul.appendChild(li);
     });
   },
-  filterAll: function () {},
-  filterPriority: (priority) => {},
   addCategory: (cat, icon) => {
     categories.push({
       name: cat,

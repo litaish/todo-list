@@ -5,11 +5,13 @@ import Folder from "../images/icons-colored/folder.svg";
 import Pencil from "../images/icons-colored/pencil.svg";
 import Plus from "../images/icons-colored/plus.svg";
 import { pubsub } from "./pubsub";
+import { v4 as uuidv4 } from 'uuid';
+import { main } from "./main";
 
 /* Handles project section (groups) in navbar */
 
 export const projects = {
-  groups: [new TaskGroup("User Tasks", false)],
+  groups: [new TaskGroup("User Tasks", false, uuidv4())],
   render: (container) => {
     const titleContainer = document.createElement("div");
     titleContainer.classList.add("nav-title-container");
@@ -22,16 +24,19 @@ export const projects = {
 
     titleContainer.append(title, seperator);
 
-    const ul = document.createElement("ul");
-    ul.setAttribute("id", "group_list");
-    ul.classList.add("nav-list");
+    const groupUl = document.createElement("ul");
+    groupUl.setAttribute("id", "group_list");
+    groupUl.classList.add("nav-list");
+    // Add one event listener for whole group list
+    groupUl.addEventListener("click", main.filterSelectedGroup);
 
-    container.append(titleContainer, ul);
+    container.append(titleContainer, groupUl);
 
-    projects.renderGroups(ul);
+    projects.renderGroups(groupUl);
 
     // Button to add new group
     const anUl = document.createElement("ul");
+
     anUl.classList.add("nav-list");
     const anLi = document.createElement("li");
 
@@ -62,6 +67,8 @@ export const projects = {
       let collection = [];
 
       const li = document.createElement("li");
+      // Set unique identificator for each group
+      li.setAttribute("data-group-uuid", group.uuid);
 
       const svgLeft = createSvgIcon(Folder, ["nav-icon"]);
 
@@ -86,7 +93,7 @@ export const projects = {
     });
   },
   registerGroup: (name, isEditable) => {
-    projects.groups.push(new TaskGroup(name, isEditable));
+    projects.groups.push(new TaskGroup(name, isEditable, uuidv4()));
   },
   groupAdded: title => {
     projects.registerGroup(title, true);

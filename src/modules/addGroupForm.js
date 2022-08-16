@@ -12,7 +12,6 @@ export const addGroupForm = {
     const titleContainer = document.createElement("header");
     titleContainer.textContent = title;
 
-    // Form
     const form = document.createElement("form");
 
     const formFieldTitle = document.createElement("div");
@@ -47,8 +46,8 @@ export const addGroupForm = {
     });
     // On click hide overlay and clear overlay container children
     cancel.addEventListener("click", () => {
-        overlay.removeForm();
-    })
+      overlay.removeForm();
+    });
 
     const submit = document.createElement("button");
     submit.textContent = "Submit";
@@ -64,7 +63,7 @@ export const addGroupForm = {
     contentContainer.append(titleContainer, form, buttonsContainer);
   },
   // Publish form data
-  add: (ev) => {
+  add: ev => {
     // Cancel the default action (submitting the form)
     ev.preventDefault();
     const inputTitle = document.getElementById("group_title");
