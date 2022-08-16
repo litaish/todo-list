@@ -69,6 +69,8 @@ export const addGroupForm = {
     ev.preventDefault();
     const inputTitle = document.getElementById("group_title");
     let title = inputTitle.value;
+    inputTitle.value = "";
+    overlay.removeForm();
 
     // Publish the form information
     console.log(`GROUP ADD FORM: just groupAdded "${title}"`);
