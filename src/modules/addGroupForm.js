@@ -57,12 +57,14 @@ export const addGroupForm = {
       type: "button",
     });
 
+    submit.addEventListener("click", addGroupForm.add);
+
     buttonsContainer.append(cancel, submit);
 
     contentContainer.append(titleContainer, form, buttonsContainer);
   },
   // Publish form data
-  addGroup: (ev) => {
+  add: (ev) => {
     // Cancel the default action (submitting the form)
     ev.preventDefault();
     const inputTitle = document.getElementById("group_title");

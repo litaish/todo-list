@@ -4,6 +4,7 @@ import { addGroupForm } from "./addGroupForm";
 import Folder from "../images/icons-colored/folder.svg";
 import Pencil from "../images/icons-colored/pencil.svg";
 import Plus from "../images/icons-colored/plus.svg";
+import { pubsub } from "./pubsub";
 
 /* Handles project section (groups) in navbar */
 
@@ -22,6 +23,7 @@ export const projects = {
     titleContainer.append(title, seperator);
 
     const ul = document.createElement("ul");
+    ul.setAttribute("id", "group_list");
     ul.classList.add("nav-list");
 
     container.append(titleContainer, ul);
@@ -29,6 +31,8 @@ export const projects = {
     projects.renderGroups(ul);
 
     // Button to add new group
+    const anUl = document.createElement("ul");
+    anUl.classList.add("nav-list");
     const anLi = document.createElement("li");
 
     const anPadding = document.createElement("div");
@@ -46,7 +50,11 @@ export const projects = {
 
     anLi.append(anPadding, anTitle, anIcon);
 
-    ul.appendChild(anLi);
+    anUl.appendChild(anLi);
+    container.append(anUl);
+
+    // Subscribed to pass in data to projects.groupAdded
+    pubsub.subscribe("groupAdded", projects.groupAdded);
   },
   renderGroups: (container) => {
     projects.groups.forEach((group) => {
@@ -78,6 +86,13 @@ export const projects = {
     });
   },
   registerGroup: (name, isEditable) => {
-    groups.push(new TaskGroup(name, isEditable));
+    projects.groups.push(new TaskGroup(name, isEditable));
   },
+  groupAdded: title => {
+    projects.registerGroup(title, true);
+    // Refresh group list - delete child nodes and display again
+    const ul = document.getElementById("group_list");
+    ul.replaceChildren();
+    projects.renderGroups(ul);
+  }
 };
