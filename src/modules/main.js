@@ -2,6 +2,8 @@ import Trash from "../images/icons-colored/trash.svg";
 import Pencil from "../images/icons-colored/trash.svg";
 import { createSvgIcon } from "./utility";
 import { projects } from "./projects";
+import { pubsub } from "./pubsub";
+import { addTaskForm } from "./addTaskForm";
 
 export const main = {
   renderBase: (container) => {
@@ -10,6 +12,9 @@ export const main = {
     mainContent.classList.add("main-content-wrapper");
     main.append(mainContent);
     container.append(main);
+
+    // Subscribe to task added event
+    pubsub.subscribe("taskAdded", main.taskAdded);
   },
   renderTasks: (group) => {
     const mainContent = document.querySelector(".main-content-wrapper");
@@ -23,6 +28,11 @@ export const main = {
     btnContainer.classList.add("add-new-task-container");
 
     const btn = document.createElement("span");
+
+    // Render add a new task form on click
+    btn.addEventListener("click", () => {
+        addTaskForm.render("Add A New Task");
+    });
 
     const btnText = document.createElement("p");
     btnText.textContent = "Add a new task...";
@@ -114,4 +124,8 @@ export const main = {
     // Render tasks by group
     main.renderTasks(group);
   },
+  taskAdded: task => {
+    // Recieves task object information from form
+    // Register task, add to group
+  }
 };
