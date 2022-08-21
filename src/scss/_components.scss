@@ -257,7 +257,7 @@ align-items: center;
                 color: base.$form-label-color;
             }
 
-            > input, textarea {
+            > input, textarea, select {
                 padding: .4rem 1rem;
                 border: base.$form-input-border;
                 border-radius: base.$border-radius;
