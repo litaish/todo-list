@@ -192,7 +192,15 @@ main {
     color: base.$task-priority-color;
     padding: .2rem .5rem;
     border-radius: base.$border-radius;
+}
+#priority_low {
     background-color: base.$priority-low-tag-color;
+}
+#priority_med {
+    background-color: base.$priority-med-tag-color;
+}
+#priority_high {
+    background-color: base.$priority-high-tag-color;
 }
 .task-tag {
     color: base.$task-date-color;
@@ -206,8 +214,8 @@ main {
     gap: 1rem;
 }
 .task-options-icon {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
 }
 
 /* Task edit, add overlay */

@@ -4,7 +4,7 @@ import { setAttributes } from "./utility";
 import { v4 as uuidv4 } from 'uuid';
 
 export const addTaskForm = {
-  render: (title) => {
+  render: (title, group) => {
     overlay.toggleOverlayDisplay();
 
     const contentContainer = document.getElementById("overlay_container");
@@ -39,8 +39,8 @@ export const addTaskForm = {
     formFieldDesc.classList.add("form-field", "field-long");
 
     const descLabel = document.createElement("label");
-    titleLabel.setAttribute("for", "task_desc");
-    titleLabel.textContent = "Title";
+    descLabel.setAttribute("for", "task_desc");
+    descLabel.textContent = "Description";
 
     const descTextarea = document.createElement("textarea");
     descTextarea.placeholder =
@@ -49,7 +49,7 @@ export const addTaskForm = {
       id: "task_desc",
       name: "task_desc",
       type: "text",
-      maxlength: "30",
+      maxlength: "120",
     });
 
     formFieldDesc.append(descLabel, descTextarea);
@@ -126,14 +126,16 @@ export const addTaskForm = {
       type: "button",
     });
 
-    submit.addEventListener("click", addTaskForm.add);
+    submit.addEventListener("click", (ev) => {
+        addTaskForm.add(ev, group);
+    });
 
     buttonsContainer.append(cancel, submit);
 
     contentContainer.append(titleContainer, form, buttonsContainer);
   },
   // Publish form data
-  add: ev => {
+  add: (ev, group) => {
     // Cancel the default action (submitting the form)
     ev.preventDefault();
     const inputTitle = document.getElementById("task_title");
@@ -145,15 +147,12 @@ export const addTaskForm = {
     textareaDesc.value = "";
 
     const dateDue = document.getElementById("task_date");
-    let due = dateDue.value;
+    let due = new Date(dateDue.value);
     dateDue.value = "";
 
     const selectPriority = document.getElementById("select_priority");
-    let priority = selectPriority.value;
+    let priority = selectPriority.options[selectPriority.selectedIndex].text;
     selectPriority.value = "";
-
-    // Get corresponding task group
-
 
     // Add all values to object
     const task = {
@@ -162,12 +161,13 @@ export const addTaskForm = {
         desc: desc,
         due: due,
         priority: priority,
+        group: group,
     }
 
     overlay.removeForm();
 
     // Publish the form information
-    console.log(`TASK ADD FORM: just taskAdded "${task}"`);
-    pubsub.publish("taskAdded", task);
+    console.log(`TASK ADD FORM: just taskAdded "${task.title}"`);
+    pubsub.publish("taskAdded", [task, group]);
   },
 };

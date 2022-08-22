@@ -1,9 +1,10 @@
 import Trash from "../images/icons-colored/trash.svg";
-import Pencil from "../images/icons-colored/trash.svg";
+import Pencil from "../images/icons-colored/pencil.svg";
 import { createSvgIcon } from "./utility";
 import { projects } from "./projects";
 import { pubsub } from "./pubsub";
 import { addTaskForm } from "./addTaskForm";
+import { Task } from "./task";
 
 export const main = {
   renderBase: (container) => {
@@ -31,8 +32,7 @@ export const main = {
 
     // Render add a new task form on click
     btn.addEventListener("click", () => {
-        addTaskForm.render("Add A New Task");
-        
+      addTaskForm.render("Add A New Task", group);
     });
 
     const btnText = document.createElement("p");
@@ -43,11 +43,14 @@ export const main = {
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
 
-    group.taskCollection.forEach((element) => {
+    group.taskCollection.forEach((groupTask) => {
       // Render tasks
       const task = document.createElement("div");
+      task.classList.add("task");
+
       const completeContainer = document.createElement("div");
       completeContainer.classList.add("task-complete-container");
+
       task.appendChild(completeContainer);
 
       const checkbox = document.createElement("input");
@@ -60,31 +63,36 @@ export const main = {
 
       const taskTitle = document.createElement("p");
       taskTitle.classList.add("task-title");
-      taskTitle.textContent = group.taskCollection.title; // change
+      taskTitle.textContent = groupTask.title 
 
       const taskDesc = document.createElement("p");
       taskDesc.classList.add("task-desc");
-      taskDesc.textContent = group.taskCollection.desc; // change
+      taskDesc.textContent = groupTask.desc
 
       const taskDetails = document.createElement("div");
       taskDetails.classList.add("task-details");
 
       const priorityTag = document.createElement("div");
       priorityTag.classList.add("task-priority-tag");
-      priorityTag.textContent = group.taskCollection.priority; // change
+      // Assign color to priority tag. Low - green, medium - yellow, high - red
+      main.assignPriorityColor(priorityTag, groupTask.priority);
+      priorityTag.textContent = groupTask.priority
 
       const date = document.createElement("div");
       date.classList.add("task-tag");
-      date.textContent = group.taskCollection.date; // change
+      date.textContent = groupTask.dueDate.toLocaleDateString();
 
       const groupTag = document.createElement("div");
       groupTag.classList.add("task-tag");
-      groupTag.textContent = group.taskCollection.group; // change
+      groupTag.textContent = groupTask.group.title;
 
       contentContainer.append(
         taskTitle,
         taskDesc,
         taskDetails,
+      );
+
+      taskDetails.append(
         priorityTag,
         date,
         groupTag
@@ -94,13 +102,33 @@ export const main = {
       taskOptions.classList.add("task-options");
 
       const deleteIcon = createSvgIcon(Trash, ["task-options-icon"]);
+      deleteIcon.classList.add("task-options-icon");
 
       const editIcon = createSvgIcon(Pencil, ["task-options-icon"]);
+      editIcon.classList.add("task-options-icon");
 
       taskOptions.append(deleteIcon, editIcon);
+
+      task.append(taskOptions);
+
+      // Append task to task container
+      taskContainer.appendChild(task);
     });
 
     mainContent.append(groupTitle, btnContainer, taskContainer);
+  },
+  assignPriorityColor: (element, selectedPriority) => {
+    switch (selectedPriority) {
+        case "Low Priority":
+            element.setAttribute("id", "priority_low");
+            break;
+        case "Medium Priority": 
+            element.setAttribute("id", "priority_med");
+            break;
+        case "High Priority":
+            element.setAttribute("id", "priority_high");
+            break;
+    }
   },
   renderNoTasks: () => {
     const mainContent = document.querySelector(".main-content-wrapper");
@@ -114,10 +142,7 @@ export const main = {
     // [[], []].. => [... , ...]
     return allTasks.flat();
   },
-  registerTask: () => {
-    
-  },
-  filterSelectedGroup: ev => {
+  filterSelectedGroup: (ev) => {
     // Find closest li node, get its UUID
     const item = ev.target.closest("li");
     const uuid = item.getAttribute("data-group-uuid");
@@ -128,9 +153,21 @@ export const main = {
     // Render tasks by group
     main.renderTasks(group);
   },
-  taskAdded: task => {
+  taskAdded: ([task, group]) => {
     // Recieves task object information from form
-    // Register task, add to group
-    console.log(task.uuid)
-  }
+    // Register task, add it to group
+    group.addTask(
+      new Task(
+        task.title,
+        task.desc,
+        task.due,
+        task.priority,
+        task.group,
+        task.uuid
+      )
+    );
+
+    // Render newly added group tasks
+    main.renderTasks(group);
+  },
 };
