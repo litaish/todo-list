@@ -7,11 +7,11 @@ import { addTaskForm } from "./addTaskForm";
 
 export const main = {
   renderBase: (container) => {
-    const main = document.createElement("main");
+    const mainEl = document.createElement("main");
     const mainContent = document.createElement("div");
     mainContent.classList.add("main-content-wrapper");
-    main.append(mainContent);
-    container.append(main);
+    mainEl.append(mainContent);
+    container.append(mainEl);
 
     // Subscribe to task added event
     pubsub.subscribe("taskAdded", main.taskAdded);
@@ -32,6 +32,7 @@ export const main = {
     // Render add a new task form on click
     btn.addEventListener("click", () => {
         addTaskForm.render("Add A New Task");
+        
     });
 
     const btnText = document.createElement("p");
@@ -113,7 +114,10 @@ export const main = {
     // [[], []].. => [... , ...]
     return allTasks.flat();
   },
-  filterSelectedGroup: (ev) => {
+  registerTask: () => {
+    
+  },
+  filterSelectedGroup: ev => {
     // Find closest li node, get its UUID
     const item = ev.target.closest("li");
     const uuid = item.getAttribute("data-group-uuid");
@@ -127,5 +131,6 @@ export const main = {
   taskAdded: task => {
     // Recieves task object information from form
     // Register task, add to group
+    console.log(task.uuid)
   }
 };

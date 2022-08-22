@@ -1,6 +1,7 @@
 import { pubsub } from "./pubsub";
 import { overlay } from "./overlay";
 import { setAttributes } from "./utility";
+import { v4 as uuidv4 } from 'uuid';
 
 export const addTaskForm = {
   render: (title) => {
@@ -44,7 +45,7 @@ export const addTaskForm = {
     const descTextarea = document.createElement("textarea");
     descTextarea.placeholder =
       "Wake up at 8:00 AM. Eat breakfast and go to the gym.";
-    setAttributes(titleInput, {
+    setAttributes(descTextarea, {
       id: "task_desc",
       name: "task_desc",
       type: "text",
@@ -85,11 +86,16 @@ export const addTaskForm = {
     });
 
     const optionLow = document.createElement("option");
+    optionLow.textContent = "Low Priority";
     optionLow.setAttribute("value", "priority_low");
+
     const optionMed = document.createElement("option");
     optionMed.setAttribute("value", "priority_med");
-    const optionHigh = document.createElement("high");
+    optionMed.textContent = "Medium Priority";
+
+    const optionHigh = document.createElement("option");
     optionHigh.setAttribute("value", "priority_high");
+    optionHigh.textContent = "High Priority";
 
     selectPriority.append(optionLow, optionMed, optionHigh);
 
@@ -130,9 +136,34 @@ export const addTaskForm = {
   add: ev => {
     // Cancel the default action (submitting the form)
     ev.preventDefault();
-    const inputTitle = document.getElementById("group_title");
+    const inputTitle = document.getElementById("task_title");
     let title = inputTitle.value;
     inputTitle.value = "";
+
+    const textareaDesc = document.getElementById("task_desc");
+    let desc = textareaDesc.value;
+    textareaDesc.value = "";
+
+    const dateDue = document.getElementById("task_date");
+    let due = dateDue.value;
+    dateDue.value = "";
+
+    const selectPriority = document.getElementById("select_priority");
+    let priority = selectPriority.value;
+    selectPriority.value = "";
+
+    // Get corresponding task group
+
+
+    // Add all values to object
+    const task = {
+        uuid: uuidv4(),
+        title: title,
+        desc: desc,
+        due: due,
+        priority: priority,
+    }
+
     overlay.removeForm();
 
     // Publish the form information
