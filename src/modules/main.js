@@ -1,5 +1,5 @@
 import Trash from "../images/icons-colored/trash.svg";
-import Pencil from "../images/icons-colored/pencil.svg";
+import Illustration from "../images/illustrations/no_tasks.svg";
 import { createSvgIcon } from "./utility";
 import { projects } from "./projects";
 import { pubsub } from "./pubsub";
@@ -28,27 +28,34 @@ export const main = {
 
     // If clicked section item is from groups, render group title, and "add a new task" controls
     if (section === "Groups") {
-    
-        const btnContainer = document.createElement("div");
-        btnContainer.classList.add("add-new-task-container");
-    
-        const btn = document.createElement("span");
-    
-        // Render add a new task form on click
-        btn.addEventListener("click", () => {
-          addTaskForm.render("Add A New Task", group);
-        });
-    
-        const btnText = document.createElement("p");
-        btnText.textContent = "Add a new task...";
-    
-        btnContainer.append(btn, btnText);
+      const btnContainer = document.createElement("div");
+      btnContainer.classList.add("add-new-task-container");
 
-        mainContent.append(btnContainer);
+      const btn = document.createElement("span");
+
+      // Render add a new task form on click
+      btn.addEventListener("click", () => {
+        addTaskForm.render("Add A New Task", group);
+      });
+
+      const btnText = document.createElement("p");
+      btnText.textContent = "Add a new task...";
+
+      btnContainer.append(btn, btnText);
+
+      mainContent.append(btnContainer);
     }
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
+
+    mainContent.append(taskContainer);
+
+    // If no tasks are present
+    if (taskArray.length === 0) {
+      main.renderNoTasks();
+      return;
+    }
 
     taskArray.forEach((groupTask) => {
       // Render tasks
@@ -114,8 +121,6 @@ export const main = {
       // Append task to task container
       taskContainer.appendChild(task);
     });
-
-    mainContent.append(taskContainer);
   },
   assignPriorityColor: (element, selectedPriority) => {
     switch (selectedPriority) {
@@ -131,7 +136,15 @@ export const main = {
     }
   },
   renderNoTasks: () => {
-    const mainContent = document.querySelector(".main-content-wrapper");
+    const taskContainer = document.querySelector(".task-container");
+
+    const noTasksText = document.createElement("h5");
+    noTasksText.textContent = "No Tasks!";
+    noTasksText.classList.add("no-tasks-title");
+
+    const illustration = createSvgIcon(Illustration, ["no-tasks-illustration"]);
+
+    taskContainer.append(noTasksText, illustration);
   },
   clear: () => {
     const mainContent = document.querySelector(".main-content-wrapper");
@@ -152,18 +165,20 @@ export const main = {
   filterByPriority: (priority) => {
     let allTasks = main.getAllTasks();
     // Filter out by priority
-    const filtered = allTasks.filter(task => task.priority === priority);
+    const filtered = allTasks.filter((task) => task.priority === priority);
 
     // Render tasks by filtered colleciton
     main.renderTasks(undefined, priority, filtered, "Categories");
 
     main.toggleHideTaskActions(true);
   },
-  toggleHideTaskActions: isHidden => {
+  toggleHideTaskActions: (isHidden) => {
     const taskOptions = document.querySelectorAll(".task-action");
-    taskOptions.forEach(option => {
-      isHidden ? option.style.visibility = "hidden" : option.style.visibility = "visibile";
-    })
+    taskOptions.forEach((option) => {
+      isHidden
+        ? (option.style.visibility = "hidden")
+        : (option.style.visibility = "visibile");
+    });
   },
   filterSelectedGroup: (ev) => {
     // Find closest li node, get its UUID

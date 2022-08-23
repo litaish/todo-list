@@ -116,6 +116,17 @@ main {
     margin-bottom: 3rem;
     font-weight: map-get($map: base.$font-weights, $key: "Regular");
 }
+.no-tasks-title {
+    color: base.$main-title-color;
+    font-size: 1.75rem;
+    margin-bottom: 3rem;
+    font-weight: map-get($map: base.$font-weights, $key: "Regular");
+}
+.no-tasks-illustration {
+    height: 30rem;
+    width: 30rem;
+    align-self: center;
+}
 .add-new-task-container {
     display: flex;
     align-items: center;

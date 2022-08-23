@@ -1,29 +1,29 @@
 /* Handles categories section in navbar */
-import Scroll from '../images/icons-colored/scroll.svg';
-import Clock from '../images/icons-colored/clock.svg';
-import { main } from './main';
+import Scroll from "../images/icons-colored/scroll.svg";
+import Clock from "../images/icons-colored/clock.svg";
+import { main } from "./main";
 
 export const categories = {
   list: [
     {
       name: "All Tasks",
       icon: Scroll,
-      type: "All"
+      type: "All",
     },
     {
       name: "Low Priority",
       icon: Clock,
-      type: "Priority"
+      type: "Priority",
     },
     {
       name: "Medium Priority",
       icon: Clock,
-      type: "Priority"
+      type: "Priority",
     },
     {
       name: "High Priority",
       icon: Clock,
-      type: "Priority"
+      type: "Priority",
     },
   ],
   render: (container) => {
@@ -48,17 +48,17 @@ export const categories = {
       li.addEventListener("click", () => {
         if (cat.type === "Priority") {
           main.filterByPriority(cat.name);
-        } 
+        }
         if (cat.type === "All") {
           main.displayAllTasks(cat.name);
         }
-      })
+      });
 
       const svg = document.createElement("object");
       svg.classList.add("nav-icon");
       svg.setAttribute("data", cat.icon);
       svg.setAttribute("type", "image/svg+xml");
-      
+
       titleEl.append(title);
       li.append(svg, titleEl);
       ul.appendChild(li);
