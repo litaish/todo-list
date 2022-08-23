@@ -2,7 +2,7 @@ import { TaskGroup } from "./group";
 import { createSvgIcon } from "./utility";
 import { addGroupForm } from "./addGroupForm";
 import Folder from "../images/icons-colored/folder.svg";
-import Pencil from "../images/icons-colored/pencil.svg";
+import Trash from "../images/icons-colored/trash.svg";
 import Plus from "../images/icons-colored/plus.svg";
 import { pubsub } from "./pubsub";
 import { v4 as uuidv4 } from 'uuid';
@@ -80,7 +80,7 @@ export const projects = {
 
       // If group is ment to be edited, create the icon and add it to the appendable collection
       if (group.isEditable !== false) {
-        const svgRight = createSvgIcon(Pencil, ["nav-icon", "nav-icon-action"]);
+        const svgRight = createSvgIcon(Trash, ["nav-icon", "nav-icon-action"]);
         // svgRight.addEventListener("click", projects.addGroup);
         collection.push(svgRight);
       }

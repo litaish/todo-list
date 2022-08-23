@@ -61,6 +61,7 @@ export const main = {
       task.appendChild(completeContainer);
 
       const checkbox = document.createElement("input");
+      checkbox.classList.add("task-action");
       checkbox.setAttribute("type", "checkbox");
       completeContainer.append(checkbox);
 
@@ -101,15 +102,12 @@ export const main = {
       taskOptions.classList.add("task-options");
 
       const deleteIcon = createSvgIcon(Trash, ["task-options-icon"]);
-      deleteIcon.classList.add("task-options-icon");
+      deleteIcon.classList.add("task-options-icon", "task-action");
       deleteIcon.addEventListener("click", (ev) => {
         main.taskDeleted(ev, group, groupTask.uuid);
       });
 
-      const editIcon = createSvgIcon(Pencil, ["task-options-icon"]);
-      editIcon.classList.add("task-options-icon");
-
-      taskOptions.append(deleteIcon, editIcon);
+      taskOptions.append(deleteIcon);
 
       task.append(taskOptions);
 
@@ -148,6 +146,8 @@ export const main = {
     let allTasks = main.getAllTasks();
 
     main.renderTasks(undefined, categoryName, allTasks, "All Tasks");
+
+    main.toggleHideTaskActions(true);
   },
   filterByPriority: (priority) => {
     let allTasks = main.getAllTasks();
@@ -156,6 +156,14 @@ export const main = {
 
     // Render tasks by filtered colleciton
     main.renderTasks(undefined, priority, filtered, "Categories");
+
+    main.toggleHideTaskActions(true);
+  },
+  toggleHideTaskActions: isHidden => {
+    const taskOptions = document.querySelectorAll(".task-action");
+    taskOptions.forEach(option => {
+      isHidden ? option.style.visibility = "hidden" : option.style.visibility = "visibile";
+    })
   },
   filterSelectedGroup: (ev) => {
     // Find closest li node, get its UUID
