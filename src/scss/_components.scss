@@ -113,13 +113,13 @@ main {
     margin: 0;
     color: base.$main-title-color;
     font-size: 2rem;
+    margin-bottom: 3rem;
     font-weight: map-get($map: base.$font-weights, $key: "Regular");
 }
 .add-new-task-container {
     display: flex;
     align-items: center;
     gap: 1.625rem;
-    margin-top: 3rem;
     margin-bottom: 2.5rem;
     margin-left: 1.4rem;
 
