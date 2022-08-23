@@ -186,7 +186,7 @@ main {
 }
 .task-details {
     display: flex;
-    gap: 3.125rem;
+    gap: 2rem;
 }
 .task-priority-tag {
     color: base.$task-priority-color;
@@ -214,8 +214,9 @@ main {
     gap: 1rem;
 }
 .task-options-icon {
-    height: 25px;
-    width: 25px;
+    height: 26px;
+    width: 26px;
+    cursor: pointer;
 }
 
 /* Task edit, add overlay */

@@ -63,11 +63,11 @@ export const main = {
 
       const taskTitle = document.createElement("p");
       taskTitle.classList.add("task-title");
-      taskTitle.textContent = groupTask.title 
+      taskTitle.textContent = groupTask.title;
 
       const taskDesc = document.createElement("p");
       taskDesc.classList.add("task-desc");
-      taskDesc.textContent = groupTask.desc
+      taskDesc.textContent = groupTask.desc;
 
       const taskDetails = document.createElement("div");
       taskDetails.classList.add("task-details");
@@ -76,7 +76,7 @@ export const main = {
       priorityTag.classList.add("task-priority-tag");
       // Assign color to priority tag. Low - green, medium - yellow, high - red
       main.assignPriorityColor(priorityTag, groupTask.priority);
-      priorityTag.textContent = groupTask.priority
+      priorityTag.textContent = groupTask.priority;
 
       const date = document.createElement("div");
       date.classList.add("task-tag");
@@ -86,23 +86,18 @@ export const main = {
       groupTag.classList.add("task-tag");
       groupTag.textContent = groupTask.group.title;
 
-      contentContainer.append(
-        taskTitle,
-        taskDesc,
-        taskDetails,
-      );
+      contentContainer.append(taskTitle, taskDesc, taskDetails);
 
-      taskDetails.append(
-        priorityTag,
-        date,
-        groupTag
-      );
+      taskDetails.append(priorityTag, date, groupTag);
 
       const taskOptions = document.createElement("div");
       taskOptions.classList.add("task-options");
 
       const deleteIcon = createSvgIcon(Trash, ["task-options-icon"]);
       deleteIcon.classList.add("task-options-icon");
+      deleteIcon.addEventListener("click", (ev) => {
+        main.taskDeleted(ev, group, groupTask.uuid);
+      });
 
       const editIcon = createSvgIcon(Pencil, ["task-options-icon"]);
       editIcon.classList.add("task-options-icon");
@@ -119,15 +114,15 @@ export const main = {
   },
   assignPriorityColor: (element, selectedPriority) => {
     switch (selectedPriority) {
-        case "Low Priority":
-            element.setAttribute("id", "priority_low");
-            break;
-        case "Medium Priority": 
-            element.setAttribute("id", "priority_med");
-            break;
-        case "High Priority":
-            element.setAttribute("id", "priority_high");
-            break;
+      case "Low Priority":
+        element.setAttribute("id", "priority_low");
+        break;
+      case "Medium Priority":
+        element.setAttribute("id", "priority_med");
+        break;
+      case "High Priority":
+        element.setAttribute("id", "priority_high");
+        break;
     }
   },
   renderNoTasks: () => {
@@ -169,5 +164,15 @@ export const main = {
 
     // Render newly added group tasks
     main.renderTasks(group);
+  },
+  taskDeleted: (ev, group, taskId) => {
+    const taskContainer = document.querySelector(".task-container");
+    const taskEl = ev.target.closest(".task");
+    // Get new filtered group task array
+    group.taskCollection = group.taskCollection.filter(
+      (task) => task.uuid !== taskId
+    );
+    // Remove task node
+    taskContainer.removeChild(taskEl);
   },
 };
