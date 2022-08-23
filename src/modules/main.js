@@ -17,33 +17,40 @@ export const main = {
     // Subscribe to task added event
     pubsub.subscribe("taskAdded", main.taskAdded);
   },
-  renderTasks: (group) => {
+  renderTasks: (group, panelTitle, taskArray, section) => {
     const mainContent = document.querySelector(".main-content-wrapper");
     mainContent.replaceChildren();
 
     const groupTitle = document.createElement("h5");
     groupTitle.classList.add("main-title");
-    groupTitle.textContent = group.title;
+    groupTitle.textContent = panelTitle;
+    mainContent.append(groupTitle);
 
-    const btnContainer = document.createElement("div");
-    btnContainer.classList.add("add-new-task-container");
+    // If clicked section item is from groups, render group title, and "add a new task" controls
+    if (section === "Groups") {
+    
+        const btnContainer = document.createElement("div");
+        btnContainer.classList.add("add-new-task-container");
+    
+        const btn = document.createElement("span");
+    
+        // Render add a new task form on click
+        btn.addEventListener("click", () => {
+          addTaskForm.render("Add A New Task", group);
+        });
+    
+        const btnText = document.createElement("p");
+        btnText.textContent = "Add a new task...";
+    
+        btnContainer.append(btn, btnText);
 
-    const btn = document.createElement("span");
-
-    // Render add a new task form on click
-    btn.addEventListener("click", () => {
-      addTaskForm.render("Add A New Task", group);
-    });
-
-    const btnText = document.createElement("p");
-    btnText.textContent = "Add a new task...";
-
-    btnContainer.append(btn, btnText);
+        mainContent.append(btnContainer);
+    }
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
 
-    group.taskCollection.forEach((groupTask) => {
+    taskArray.forEach((groupTask) => {
       // Render tasks
       const task = document.createElement("div");
       task.classList.add("task");
@@ -110,7 +117,7 @@ export const main = {
       taskContainer.appendChild(task);
     });
 
-    mainContent.append(groupTitle, btnContainer, taskContainer);
+    mainContent.append(taskContainer);
   },
   assignPriorityColor: (element, selectedPriority) => {
     switch (selectedPriority) {
@@ -137,6 +144,19 @@ export const main = {
     // [[], []].. => [... , ...]
     return allTasks.flat();
   },
+  displayAllTasks: (categoryName) => {
+    let allTasks = main.getAllTasks();
+
+    main.renderTasks(undefined, categoryName, allTasks, "All Tasks");
+  },
+  filterByPriority: (priority) => {
+    let allTasks = main.getAllTasks();
+    // Filter out by priority
+    const filtered = allTasks.filter(task => task.priority === priority);
+
+    // Render tasks by filtered colleciton
+    main.renderTasks(undefined, priority, filtered, "Categories");
+  },
   filterSelectedGroup: (ev) => {
     // Find closest li node, get its UUID
     const item = ev.target.closest("li");
@@ -146,7 +166,7 @@ export const main = {
     const group = projects.groups.find((group) => group.uuid === uuid);
 
     // Render tasks by group
-    main.renderTasks(group);
+    main.renderTasks(group, group.title, group.taskCollection, "Groups");
   },
   taskAdded: ([task, group]) => {
     // Recieves task object information from form
@@ -163,7 +183,7 @@ export const main = {
     );
 
     // Render newly added group tasks
-    main.renderTasks(group);
+    main.renderTasks(group, group.title, group.taskCollection, "Groups");
   },
   taskDeleted: (ev, group, taskId) => {
     const taskContainer = document.querySelector(".task-container");
