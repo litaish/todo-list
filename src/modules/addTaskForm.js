@@ -1,7 +1,7 @@
 import { pubsub } from "./pubsub";
 import { overlay } from "./overlay";
 import { setAttributes } from "./utility";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export const addTaskForm = {
   render: (title, group) => {
@@ -9,7 +9,6 @@ export const addTaskForm = {
 
     const contentContainer = document.getElementById("overlay_container");
 
-    // Title of overlay form
     const titleContainer = document.createElement("header");
     titleContainer.textContent = title;
 
@@ -82,8 +81,8 @@ export const addTaskForm = {
     formFieldPriority.classList.add("form-field", "field-short");
     const selectPriority = document.createElement("select");
     setAttributes(selectPriority, {
-        id: "select_priority",
-        name: "select_priority"
+      id: "select_priority",
+      name: "select_priority",
     });
 
     const optionLow = document.createElement("option");
@@ -101,11 +100,14 @@ export const addTaskForm = {
     selectPriority.append(optionLow, optionMed, optionHigh);
 
     formFieldPriority.append(priorityLabel, selectPriority);
-     
 
-    form.append(formFieldTitle, formFieldDesc, formFieldDate, formFieldPriority);
+    form.append(
+      formFieldTitle,
+      formFieldDesc,
+      formFieldDate,
+      formFieldPriority
+    );
 
-    // Render control buttons
     const buttonsContainer = document.createElement("div");
     buttonsContainer.classList.add("overlay-buttons");
 
@@ -115,7 +117,7 @@ export const addTaskForm = {
       id: "cancel_button",
       type: "button",
     });
-    // On click hide overlay and clear overlay container children
+
     cancel.addEventListener("click", () => {
       overlay.removeForm();
     });
@@ -128,7 +130,7 @@ export const addTaskForm = {
     });
 
     submit.addEventListener("click", (ev) => {
-        addTaskForm.add(ev, group);
+      addTaskForm.add(ev, group);
     });
 
     buttonsContainer.append(cancel, submit);
@@ -157,18 +159,17 @@ export const addTaskForm = {
 
     // Add all values to object
     const task = {
-        uuid: uuidv4(),
-        title: title,
-        desc: desc,
-        due: due,
-        priority: priority,
-        group: group,
-    }
+      uuid: uuidv4(),
+      title: title,
+      desc: desc,
+      due: due,
+      priority: priority,
+      group: group,
+    };
 
     overlay.removeForm();
 
     // Publish the form information
-    console.log(`TASK ADD FORM: just taskAdded "${task.title}"`);
     pubsub.publish("taskAdded", [task, group]);
   },
 };

@@ -32,7 +32,6 @@ export const projects = {
 
     projects.renderGroups(groupUl);
 
-    // Button to add new group
     const anUl = document.createElement("ul");
 
     anUl.classList.add("nav-list");
@@ -46,7 +45,7 @@ export const projects = {
     anTitle.appendChild(anTitleText);
 
     const anIcon = createSvgIcon(Plus, ["nav-icon", "nav-icon-action"]);
-    // Add event listener for Add New Group button
+
     anIcon.addEventListener("click", () => {
       addGroupForm.render("Add A New Group");
     });
@@ -65,7 +64,6 @@ export const projects = {
       let collection = [];
 
       const li = document.createElement("li");
-      // Set unique identificator for each group
       li.setAttribute("data-group-uuid", group.uuid);
 
       const svgLeft = createSvgIcon(Folder, ["nav-icon"]);
@@ -78,7 +76,7 @@ export const projects = {
 
       collection.push(svgLeft, titleEl);
 
-      // If group is ment to be edited, create the icon and add it to the appendable collection
+      // If group is ment to be removed, create the remove icon and add it to the collection
       if (group.isEditable !== false) {
         const svgRight = createSvgIcon(Trash, ["nav-icon", "nav-icon-action"]);
 

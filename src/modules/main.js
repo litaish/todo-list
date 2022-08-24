@@ -7,16 +7,21 @@ import { addTaskForm } from "./addTaskForm";
 import { Task } from "./task";
 
 export const main = {
-  renderBase: (container) => {
+  // Renders base content - main element and content container
+  renderBase: container => {
     const mainEl = document.createElement("main");
+
     const mainContent = document.createElement("div");
     mainContent.classList.add("main-content-wrapper");
+
     mainEl.append(mainContent);
+
     container.append(mainEl);
 
     // Subscribe to task added event
     pubsub.subscribe("taskAdded", main.taskAdded);
   },
+  // Section - "Categories" or "Groups"
   renderTasks: (group, panelTitle, taskArray, section) => {
     const mainContent = document.querySelector(".main-content-wrapper");
     mainContent.replaceChildren();
@@ -26,14 +31,13 @@ export const main = {
     groupTitle.textContent = panelTitle;
     mainContent.append(groupTitle);
 
-    // If clicked section item is from groups, render group title, and "add a new task" controls
+    // If clicked section item is in groups, render group title, and "add a new task" controls
     if (section === "Groups") {
       const btnContainer = document.createElement("div");
       btnContainer.classList.add("add-new-task-container");
 
       const btn = document.createElement("span");
 
-      // Render add a new task form on click
       btn.addEventListener("click", () => {
         addTaskForm.render("Add A New Task", group);
       });
@@ -51,14 +55,14 @@ export const main = {
 
     mainContent.append(taskContainer);
 
-    // If no tasks are present
+    // If no tasks are present in category or group, render a "no tasks" message
     if (taskArray.length === 0) {
       main.renderNoTasks();
       return;
     }
 
+    // Render tasks
     taskArray.forEach((groupTask) => {
-      // Render tasks
       const task = document.createElement("div");
       task.classList.add("task");
 
@@ -70,7 +74,13 @@ export const main = {
       const checkbox = document.createElement("input");
 
       // If task isCompleted, render checkbox as checked
-      (groupTask.isCompleted) ? checkbox.checked = true : checkbox.checked = false;
+      if (groupTask.isCompleted) {
+        checkbox.checked = true;
+        task.classList.add("task-completed");
+      } else {
+        checkbox.checked = false;
+        task.classList.remove("task-completed");
+      }
 
       checkbox.classList.add("task-action");
       checkbox.setAttribute("type", "checkbox");
@@ -132,7 +142,6 @@ export const main = {
 
       task.append(taskOptions);
 
-      // Append task to task container
       taskContainer.appendChild(task);
     });
   },
@@ -169,7 +178,7 @@ export const main = {
     // [[], []].. => [... , ...]
     return allTasks.flat();
   },
-  displayAllTasks: (categoryName) => {
+  displayAllTasks: categoryName => {
     let allTasks = main.getAllTasks();
 
     main.renderTasks(undefined, categoryName, allTasks, "All Tasks");
@@ -186,7 +195,7 @@ export const main = {
 
     main.toggleHideTaskActions(true);
   },
-  toggleHideTaskActions: (isHidden) => {
+  toggleHideTaskActions: isHidden => {
     const taskOptions = document.querySelectorAll(".task-action");
     taskOptions.forEach((option) => {
       isHidden
@@ -194,7 +203,7 @@ export const main = {
         : (option.style.visibility = "visibile");
     });
   },
-  filterSelectedGroup: (ev) => {
+  filterSelectedGroup: ev => {
     // Find closest li node, get its UUID
     const item = ev.target.closest("li");
     const uuid = item.getAttribute("data-group-uuid");

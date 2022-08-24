@@ -3,12 +3,11 @@ import { overlay } from "./overlay";
 import { setAttributes } from "./utility";
 
 export const addGroupForm = {
-  render: (title) => {
+  render: title => {
     overlay.toggleOverlayDisplay();
 
     const contentContainer = document.getElementById("overlay_container");
 
-    // Title of overlay form
     const titleContainer = document.createElement("header");
     titleContainer.textContent = title;
 
@@ -34,7 +33,6 @@ export const addGroupForm = {
 
     form.append(formFieldTitle);
 
-    // Render control buttons
     const buttonsContainer = document.createElement("div");
     buttonsContainer.classList.add("overlay-buttons");
 
@@ -44,7 +42,7 @@ export const addGroupForm = {
       id: "cancel_button",
       type: "button",
     });
-    // On click hide overlay and clear overlay container children
+
     cancel.addEventListener("click", () => {
       overlay.removeForm();
     });
@@ -72,7 +70,6 @@ export const addGroupForm = {
     overlay.removeForm();
 
     // Publish the form information
-    console.log(`GROUP ADD FORM: just groupAdded "${title}"`);
     pubsub.publish("groupAdded", title);
   },
 };

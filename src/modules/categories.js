@@ -29,9 +29,10 @@ export const categories = {
   render: (container) => {
     const titleContainer = document.createElement("div");
     titleContainer.classList.add("nav-title-container");
+
     const title = document.createElement("h5");
-    const titleText = document.createTextNode("Categories");
-    title.appendChild(titleText);
+    title.textContent = "Categories";
+
     const seperator = document.createElement("hr");
     titleContainer.append(title, seperator);
 
@@ -39,11 +40,11 @@ export const categories = {
     ul.classList.add("nav-list");
     container.append(titleContainer, ul);
 
-    // Render categories
     categories.list.forEach((cat) => {
       const li = document.createElement("li");
+
       const titleEl = document.createElement("p");
-      const title = document.createTextNode(cat.name);
+      titleEl.textContent = cat.name;
 
       li.addEventListener("click", () => {
         if (cat.type === "Priority") {
@@ -59,7 +60,6 @@ export const categories = {
       svg.setAttribute("data", cat.icon);
       svg.setAttribute("type", "image/svg+xml");
 
-      titleEl.append(title);
       li.append(svg, titleEl);
       ul.appendChild(li);
     });
