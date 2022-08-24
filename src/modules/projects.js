@@ -5,7 +5,7 @@ import Folder from "../images/icons-colored/folder.svg";
 import Trash from "../images/icons-colored/trash.svg";
 import Plus from "../images/icons-colored/plus.svg";
 import { pubsub } from "./pubsub";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { main } from "./main";
 
 /* Handles project section (groups) in navbar */
@@ -27,8 +27,6 @@ export const projects = {
     const groupUl = document.createElement("ul");
     groupUl.setAttribute("id", "group_list");
     groupUl.classList.add("nav-list");
-    // Add one event listener for whole group list
-    groupUl.addEventListener("click", main.filterSelectedGroup);
 
     container.append(titleContainer, groupUl);
 
@@ -50,8 +48,8 @@ export const projects = {
     const anIcon = createSvgIcon(Plus, ["nav-icon", "nav-icon-action"]);
     // Add event listener for Add New Group button
     anIcon.addEventListener("click", () => {
-        addGroupForm.render("Add A New Group");
-    })
+      addGroupForm.render("Add A New Group");
+    });
 
     anLi.append(anPadding, anTitle, anIcon);
 
@@ -76,12 +74,18 @@ export const projects = {
       const title = document.createTextNode(group.title);
       titleEl.appendChild(title);
 
+      titleEl.addEventListener("click", main.filterSelectedGroup);
+
       collection.push(svgLeft, titleEl);
 
       // If group is ment to be edited, create the icon and add it to the appendable collection
       if (group.isEditable !== false) {
         const svgRight = createSvgIcon(Trash, ["nav-icon", "nav-icon-action"]);
-        // svgRight.addEventListener("click", projects.addGroup);
+
+        svgRight.addEventListener("click", (ev) => {
+          projects.groupDeleted(ev, group);
+        });
+
         collection.push(svgRight);
       }
 
@@ -95,11 +99,22 @@ export const projects = {
   registerGroup: (name, isEditable) => {
     projects.groups.push(new TaskGroup(name, isEditable, uuidv4()));
   },
-  groupAdded: title => {
+  groupAdded: (title) => {
     projects.registerGroup(title, true);
     // Refresh group list - delete child nodes and display again
     const ul = document.getElementById("group_list");
     ul.replaceChildren();
     projects.renderGroups(ul);
-  }
+  },
+  groupDeleted: (ev, group) => {
+    projects.groups = projects.groups.filter(
+      (item) => item.uuid !== group.uuid
+    );
+
+    const ul = document.getElementById("group_list");
+
+    ul.replaceChildren();
+
+    projects.renderGroups(ul);
+  },
 };

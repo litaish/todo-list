@@ -10,6 +10,7 @@ export const nav = {
     container.appendChild(navEl);
 
     const contentContainer = document.createElement("div");
+    contentContainer.setAttribute("id", "nav_content_container");
     navEl.appendChild(contentContainer);
 
     // Render seperate components
