@@ -3,7 +3,7 @@ import { overlay } from "./overlay";
 import { setAttributes } from "./utility";
 
 export const addGroupForm = {
-  render: title => {
+  render: (title) => {
     overlay.toggleOverlayDisplay();
 
     const contentContainer = document.getElementById("overlay_container");
@@ -27,6 +27,7 @@ export const addGroupForm = {
       name: "group_title",
       type: "text",
       maxlength: "30",
+      required: "",
     });
 
     formFieldTitle.append(titleLabel, titleInput);
@@ -54,14 +55,21 @@ export const addGroupForm = {
       type: "button",
     });
 
-    submit.addEventListener("click", addGroupForm.add);
+    submit.addEventListener("click", (ev) => {
+      // Check if form fields meet "required" status
+      if (form.checkValidity()) {
+        addGroupForm.add(ev);
+      } else {
+        alert("Please fill out all fields!");
+      }
+    });
 
     buttonsContainer.append(cancel, submit);
 
     contentContainer.append(titleContainer, form, buttonsContainer);
   },
   // Publish form data
-  add: ev => {
+  add: (ev) => {
     // Cancel the default action (submitting the form)
     ev.preventDefault();
     const inputTitle = document.getElementById("group_title");

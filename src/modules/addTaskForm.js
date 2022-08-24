@@ -30,6 +30,7 @@ export const addTaskForm = {
       type: "text",
       minlength: "1",
       maxlength: "30",
+      required: "",
     });
 
     formFieldTitle.append(titleLabel, titleInput);
@@ -50,6 +51,7 @@ export const addTaskForm = {
       name: "task_desc",
       type: "text",
       maxlength: "120",
+      required: "",
     });
 
     formFieldDesc.append(descLabel, descTextarea);
@@ -67,6 +69,7 @@ export const addTaskForm = {
       id: "task_date",
       name: "task_date",
       type: "date",
+      required: "",
     });
 
     formFieldDate.append(dateLabel, dateInput);
@@ -83,6 +86,7 @@ export const addTaskForm = {
     setAttributes(selectPriority, {
       id: "select_priority",
       name: "select_priority",
+      required: "",
     });
 
     const optionLow = document.createElement("option");
@@ -130,7 +134,12 @@ export const addTaskForm = {
     });
 
     submit.addEventListener("click", (ev) => {
-      addTaskForm.add(ev, group);
+      // Check if form fields meet "required" status
+      if (form.checkValidity()) {
+        addTaskForm.add(ev, group);
+      } else {
+        alert("Please fill out all fields!");
+      }
     });
 
     buttonsContainer.append(cancel, submit);
