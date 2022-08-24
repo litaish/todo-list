@@ -68,8 +68,22 @@ export const main = {
       task.appendChild(completeContainer);
 
       const checkbox = document.createElement("input");
+
+      // If task isCompleted, render checkbox as checked
+      (groupTask.isCompleted) ? checkbox.checked = true : checkbox.checked = false;
+
       checkbox.classList.add("task-action");
       checkbox.setAttribute("type", "checkbox");
+
+      checkbox.addEventListener("change", () => {
+        // Add class that changes task styling when task is completed
+        task.classList.toggle("task-completed");
+
+        groupTask.isCompleted === false
+          ? (groupTask.isCompleted = true)
+          : (groupTask.isCompleted = false);
+      });
+
       completeContainer.append(checkbox);
 
       const contentContainer = document.createElement("div");

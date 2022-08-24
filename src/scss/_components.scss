@@ -229,6 +229,14 @@ main {
     width: 30px;
     cursor: pointer;
 }
+.task-completed * {
+    filter: opacity(85%);
+
+    .task-title,
+    .task-desc {
+        text-decoration: line-through;
+    }
+}
 
 /* Task edit, add overlay */
 #overlay {
