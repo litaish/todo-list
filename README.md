@@ -6,7 +6,7 @@ To-do list implementing the **pub-sub** design pattern
 
 ![alt text](https://github.com/litaish/todo-list/blob/main/todo-sample.png)
 
-Demo: 
+[Demo](https://litaish.github.io/todo-list/) 
 
 Todo-list functions:
 
