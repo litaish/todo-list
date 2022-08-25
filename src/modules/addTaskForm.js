@@ -50,7 +50,7 @@ export const addTaskForm = {
       id: "task_desc",
       name: "task_desc",
       type: "text",
-      maxlength: "120",
+      maxlength: "250",
       required: "",
     });
 
