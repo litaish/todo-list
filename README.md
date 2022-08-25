@@ -4,6 +4,8 @@
 
 To-do list implementing the **pub-sub** design pattern
 
+![alt text](https://github.com/litaish/todo-list/blob/main/todo-sample.png)
+
 Demo: 
 
 Todo-list functions:
