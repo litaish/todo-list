@@ -11,6 +11,7 @@ import { main } from "./main";
 /* Handles project section (groups) in navbar */
 
 export const projects = {
+  // groups: [new TaskGroup("User Tasks", false, uuidv4())],
   groups: [new TaskGroup("User Tasks", false, uuidv4())],
   render: (container) => {
     const titleContainer = document.createElement("div");

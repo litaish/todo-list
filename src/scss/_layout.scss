@@ -33,3 +33,12 @@ main {
 footer {
     grid-area: footer;
 }
+@media (max-width: base.$desktop-small) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    footer {
+        margin-top: auto;
+    }
+}

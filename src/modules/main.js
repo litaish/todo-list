@@ -23,6 +23,7 @@ export const main = {
   },
   // Section - "Categories" or "Groups"
   renderTasks: (group, panelTitle, taskArray, section) => {
+
     const mainContent = document.querySelector(".main-content-wrapper");
     mainContent.replaceChildren();
 
@@ -217,7 +218,7 @@ export const main = {
   taskAdded: ([task, group]) => {
     // Recieves task object information from form
     // Register task, add it to group
-    group.addTask(
+    group.taskCollection.push(
       new Task(
         task.title,
         task.desc,

@@ -7,8 +7,4 @@ export class TaskGroup {
     this.isEditable = isEditable;
     this.uuid = uuid;
   }
-
-  addTask(task) {
-    this.taskCollection.push(task);
-  }
 }

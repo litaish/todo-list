@@ -65,6 +65,12 @@ nav {
     margin-left: auto;
     cursor: pointer;
 }
+@media (max-width: base.$desktop-small) {
+    nav {
+        padding: 1.75rem 1.25rem 0.75rem 1.25rem;
+        border: none;
+    }
+}
 
 /* Footer */
 footer {
@@ -95,6 +101,16 @@ footer {
 
     > svg {
         color: base.$footer-icon-color;
+    }
+}
+@media (max-width: base.$tablet) {
+    footer {
+        height: 15rem;
+    }
+    .created-by-container {
+        padding: 0.2rem 3rem;
+        border: none;
+        margin: 0.5rem;
     }
 }
 
@@ -237,6 +253,59 @@ main {
         text-decoration: line-through;
     }
 }
+@media (max-width: base.$desktop-small) {
+    main {
+        height: 100%;
+        padding: 1.75rem 2rem;
+    }
+    .task {
+        width: 100%;
+    }
+    .main-title {
+        margin-bottom: 2rem;
+        font-size: 1.75rem;
+    }
+}
+@media (max-width: base.$tablet) {
+    main {
+        padding: 1rem 0.75rem;
+    }
+    .task {
+        padding: 0.75rem;
+    }
+    .task-content-container {
+
+        p,
+        .task-priority-tag,
+        .task-tag
+         {
+            font-size: clamp(0.75rem, 4vw, 1rem);
+        }
+    }
+    .task-details {
+        gap: 1rem;
+    }
+    .no-tasks-title {
+        margin: 1rem;
+    }
+    .no-tasks-illustration {
+        width: 75%;
+        height: 75%;
+    }
+}
+@media (max-width: base.$mobile) {
+    .task {
+        gap: 0.75rem;
+    }
+    .task-action {
+        height: 25px;
+        width: 25px;
+    }
+    .task-complete-container > input[type=checkbox] {
+        height: 15px;
+        width: 15px;
+    }
+}
 
 /* Task edit, add overlay */
 #overlay {
@@ -335,5 +404,19 @@ align-items: center;
         &:hover {
             background-color: base.$form-btn-hover-color;
         }
+    }
+}
+@media (max-width: base.$tablet) {
+    #overlay {
+        > div {
+            width: 90%;
+
+            > header {
+                font-size: 7vw;
+            }
+        }
+    }
+    .form-field {
+        width: 100% !important;
     }
 }
